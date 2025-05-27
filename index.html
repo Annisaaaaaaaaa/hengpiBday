@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hengpi bday puud</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    #special-image {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 20%;
+      transform: translate(-50%, -50%);
+      max-width: 300px;
+      max-height: 300px;
+      z-index: 2000;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+
+    #special-image2 {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 80%;
+      transform: translate(-50%, -50%);
+      max-width: 300px;
+      max-height: 300px;
+      z-index: 2000;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+
+    @keyframes zoomInLimited {
+      0% {
+        transform: translate(-50%, -50%) scale(0.3);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+    }
+
+    @keyframes shakeLoop {
+      0%, 100% { transform: translate(-50%, -50%) scale(1.5) rotate(0deg); }
+      25% { transform: translate(-50%, -50%) scale(1.5) rotate(-2deg); }
+      50% { transform: translate(-50%, -50%) scale(1.5) rotate(2deg); }
+      75% { transform: translate(-50%, -50%) scale(1.5) rotate(-1deg); }
+    }
+
+    #special-image.zoom-in,
+    #special-image2.zoom-in {
+      animation: zoomInLimited 1.5s ease forwards;
+    }
+
+    #special-image.shake-loop,
+    #special-image2.shake-loop {
+      animation: shakeLoop 0.5s infinite;
+    }
+
+    .text2 {
+      width: fit-content;
+      font-size: 20px;
+      top: 125px;
+      left: -140px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Gambar spesial -->
+    <img id="special-image" src="img/puud.jpg" alt="Special" />
+    <img id="special-image2" src="img/puud.jpg" alt="Special" />
+
+    <!-- Kue ulang tahun -->
+    <div id="birthday-cake">
+      <div class="cake">    
+        <div class="middle"></div>
+        <div class="chocs"></div>
+        <div class="top"></div>
+      </div>
+      <div class="candles">
+        <div class="flame"></div>
+        <div class="flame2"></div>
+        <div class="flame3"></div>
+        <div class="text">Hengpi Bday Bnag Vau!</div>
+        <div class="shadows"></div>
+      </div>
+      <p class="text2">*Klik lilinnya bnag kalau mau ditiup</p>
+    </div>
+  </div>
+
+  <!-- Suara -->
+  <audio id="pop-sound" src="img/bing.mp3" preload="auto"></audio>
+  <audio id="backsound" src="img/her.mp3" preload="auto" loop></audio>
+
+  <script>
+    $(document).ready(function () {
+      const wishes = [
+        "Hengpi Bday Bnag Vau!",
+        "Semoga makin gemoy! 🎈",
+        "Jangan lupa traktir yaa 🧁",
+        "Hidup bahagia selalu! 💖"
+      ];
+      let i = 0;
+
+      $(".candles").click(function () {
+        $(".flame, .flame2, .flame3").fadeOut("fast");
+
+        $(".text")
+          .text(wishes[i])
+          .css("top", "100px")
+          .addClass("shake")
+          .animate({ top: -90, opacity: 1 }, "fast", function () {
+            setTimeout(() => $(".text").removeClass("shake"), 500);
+          });
+
+        confetti({
+          particleCount: 150,
+          spread: 100,
+          origin: { y: 0.6 }
+        });
+
+        const popSound = $("#pop-sound")[0];
+        const backSound = $("#backsound")[0];
+        const specialImage = $("#special-image");
+        const specialImage2 = $("#special-image2");
+
+        popSound.play();
+
+        popSound.onended = function () {
+          backSound.play();
+          specialImage.fadeIn(300, function () {
+            specialImage.addClass("zoom-in");
+            setTimeout(() => {
+              specialImage.removeClass("zoom-in").addClass("shake-loop");
+            }, 1500);
+          });
+
+          specialImage2.fadeIn(300, function () {
+            specialImage2.addClass("zoom-in");
+            setTimeout(() => {
+              specialImage2.removeClass("zoom-in").addClass("shake-loop");
+            }, 1500);
+          });
+        };
+
+        i = (i + 1) % wishes.length;
+      });
+
+      $("#special-image, #special-image2").click(function () {
+        window.location.href = "hal/halaman-baru.html";
+      });
+    });
+  </script>
+</body>
+</html>

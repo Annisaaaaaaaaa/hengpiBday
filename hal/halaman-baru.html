@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="kartu.css" />
+</head>
+<body>
+  <div class="card">
+    <div class="outside">
+      <div class="front">
+        <p>Hangbede vau</p>
+        <div class="cake">
+          <div class="top-layer"></div>
+          <div class="middle-layer"></div>
+          <div class="bottom-layer"></div>
+          <div class="candle"></div>
+        </div>
+      </div>
+      <div class="back"></div>
+    </div>
+    <div class="inside">
+      <p>Selamat Ulang tahun bang, semoga menjadi perawat yang baik pls jangan suntik mati bg.</p>
+      <img src="/img/hbd2.jpg" alt="Hadiah Ulang Tahun" class="gift-img" />
+    </div>
+  </div>
+
+  <!-- Suara saat hover -->
+  <audio id="hover-sound" src="/img/dong.mp3" preload="auto"></audio>
+
+  <script>
+    const hoverSound = document.getElementById("hover-sound");
+    document.querySelector(".card").addEventListener("mouseenter", () => {
+      hoverSound.currentTime = 0;
+      hoverSound.play();
+    });
+  </script>
+</body>
+</html>
